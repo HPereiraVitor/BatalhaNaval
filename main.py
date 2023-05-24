@@ -64,8 +64,94 @@ class Player:
             id_peca    = re.search('.(?=\;)', line).group()
             self.peca_pos.update({id_peca: {}})
             pos_peca   = line.split(";")[1].replace('\n', '').split('|')
+            
             for i, n in enumerate(pos_peca):
-                self.peca_pos[id_peca].update({i: {'places': [n[:-1]], 'orientation': [n[-1]]}})
+                self.peca_pos[id_peca].update({i: [n[:-1]]})
+                idx = 0
+                start_pos_l = n[0]
+                start_pos_l_idx = ref.index(start_pos_l)
+                start_pos_n = int(n[1:-1])
+            
+                if id_peca == "1":
+                    while idx < self.board.boats["encouraçado"]['pos']:
+                        count = idx+1
+            
+                        if n[-1] == 'V':
+                            if start_pos_l_idx+count >= len(ref):
+                                print("ERROR_POSITION_NONEXISTENT_VALIDATION")
+                                exit(-1)
+                            else:
+                                self.peca_pos[id_peca][i].append(f'{ref[start_pos_l_idx+count]}{start_pos_n}')
+            
+                        elif n[-1] == 'H':
+                            if start_pos_n+(idx+1) >= len(ref):
+                                print("ERROR_POSITION_NONEXISTENT_VALIDATION")
+                                exit(-1)
+                            else:
+                                self.peca_pos[id_peca][i].append(f'{start_pos_l}{start_pos_n+(idx+1)}')
+
+                        idx += 1
+
+                elif id_peca == "2":
+                    while idx < self.board.boats["porta-aviões"]['pos']:
+                        count = idx+1
+
+                        if n[-1] == 'V':
+                            if start_pos_l_idx+count >= len(ref):
+                                print("ERROR_POSITION_NONEXISTENT_VALIDATION")
+                                exit(-1)
+                            else:
+                                self.peca_pos[id_peca][i].append(f'{ref[start_pos_l_idx+count]}{start_pos_n}')
+            
+                        elif n[-1] == 'H':
+                            if start_pos_n+(idx+1) >= len(ref):
+                                print("ERROR_POSITION_NONEXISTENT_VALIDATION")
+                                exit(-1)
+                            else:
+                                self.peca_pos[id_peca][i].append(f'{start_pos_l}{start_pos_n+(idx+1)}')
+
+                        idx += 1
+
+                elif id_peca == "3":
+                    while idx < self.board.boats["porta-aviões"]['pos']:
+                        count = idx+1
+
+                        if n[-1] == 'V':
+                            if start_pos_l_idx+count >= len(ref):
+                                print("ERROR_POSITION_NONEXISTENT_VALIDATION")
+                                exit(-1)
+                            else:
+                                self.peca_pos[id_peca][i].append(f'{ref[start_pos_l_idx+count]}{start_pos_n}')
+            
+                        elif n[-1] == 'H':
+                            if start_pos_n+(idx+1) >= len(ref):
+                                print("ERROR_POSITION_NONEXISTENT_VALIDATION")
+                                exit(-1)
+                            else:
+                                self.peca_pos[id_peca][i].append(f'{start_pos_l}{start_pos_n+(idx+1)}')
+
+                        idx += 1
+
+                elif id_peca == "4":
+                    while idx < self.board.boats["porta-aviões"]['pos']:
+                        count = idx+1
+
+                        if n[-1] == 'V':
+                            if start_pos_l_idx+count >= len(ref):
+                                print("ERROR_POSITION_NONEXISTENT_VALIDATION")
+                                exit(-1)
+                            else:
+                                self.peca_pos[id_peca][i].append(f'{ref[start_pos_l_idx+count]}{start_pos_n}')
+            
+                        elif n[-1] == 'H':
+                            if start_pos_n+(idx+1) >= len(ref):
+                                print("ERROR_POSITION_NONEXISTENT_VALIDATION")
+                                exit(-1)
+                            else:
+                                self.peca_pos[id_peca][i].append(f'{start_pos_l}{start_pos_n+(idx+1)}')
+
+                        idx += 1
+
 
 
             print(self.peca_pos)
