@@ -1,7 +1,15 @@
 import re #regex
 p1_boats = []
+p1_plays = []
 p2_boats = []
+p2_plays = []
 ref = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P"]
+game_result = {
+    "jogador": "",
+    "hits": 0,
+    "erros": 0,
+    "pontuacao": 0
+}
 
 class Error_Handle:
     def __init__(self) -> None:
@@ -189,10 +197,14 @@ class Player:
 
                             idx += 1
 
+            elif line[0] == 'T':
+                _arr = line.split(';')[1].split('|')
+                for _i in _arr:
+                    if self.pId == 1:
+                        p1_plays.append(_i)
+                    else:
+                        p2_plays.append(_i)
 
-
-            print(p1_boats)
-            print(p2_boats)
 
 
 class Game:
@@ -202,8 +214,57 @@ class Game:
         self.winner()
 
     def winner(self):
+        p1_hits = 0
+        p1_erros = 0
+        p1_points = 0
+        p2_hits = 0
+        p2_erros = 0
+        p2_points = 0
+        for play in p1_plays:
+            if play in p2_boats:
+                p1_hits += 1
+                p1_points += 3
+            else:
+                p1_erros += 1
+
+        for play in p2_plays:
+            if play in p1_boats:
+                p2_hits += 1
+                p2_points += 3
+            else:
+                p2_erros += 1
+
+        print(f'''
+                jogador1
+                {p1_hits}
+                {p1_erros}
+                {p1_points}
+              
+              ----------------------------------------------
+                jogador2
+                {p2_hits}
+                {p2_erros}
+                {p2_points}
+              ''')
+
+        if p1_points > p2_points:
+            game_result['jogador'] = "jogador1"
+            game_result["hits"] = p1_hits
+            game_result['erros'] = p1_erros
+            game_result["pontuacao"] = p1_points
+        elif p1_points < p2_points:
+            game_result['jogador'] = "jogador2"
+            game_result["hits"] = p2_hits
+            game_result['erros'] = p2_erros
+            game_result["pontuacao"] = p2_points
+        else:
+            game_result = f"jogador1 {p1_hits} {p1_erros} {p1_points}\njogador2 {p2_hits} {p2_erros} {p2_points}"
+
         with open('resultado.txt', 'w') as f:
-            f.write("")
+            if type(game_result) is dict:
+                f.write(f"{game_result['jogador']} {game_result['hits']} {game_result['erros']} {game_result['pontuacao']}")
+            else:
+                f.write(game_result)
 
 if __name__ == '__main__':
     p1 = Player('p1.txt', 1)

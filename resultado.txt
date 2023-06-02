@@ -1,0 +1,2 @@
+jogador1 6 19 18
+jogador2 6 19 18
