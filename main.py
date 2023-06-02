@@ -87,6 +87,11 @@ class Player:
         self.error_handle = Error_Handle()
         self.readfile()
 
+    def save_error(self, error):
+        with open('resultado.txt', 'w') as f:
+            f.write('jogador1' if self.pId == 1 else 'jogador2')
+            f.write(error)
+
     def readfile(self):
         for line in self.file:
             if line[0] in ("1","2","3","4") and not line.startswith("#"):
@@ -110,6 +115,7 @@ class Player:
 
                             if n[-1] == 'V':
                                 if start_pos_l_idx+idx >= len(ref):
+                                    self.save_error("ERROR_POSITION_NONEXISTENT_VALIDATION")
                                     raise Exception("ERROR_POSITION_NONEXISTENT_VALIDATION")
                                 else:
                                     self.peca_pos[id_peca][i].append(f'{ref[start_pos_l_idx+idx]}{start_pos_n}')
@@ -120,6 +126,7 @@ class Player:
 
                             elif n[-1] == 'H':
                                 if start_pos_n+(idx) >= len(ref):
+                                    self.save_error("ERROR_POSITION_NONEXISTENT_VALIDATION")
                                     raise Exception("ERROR_POSITION_NONEXISTENT_VALIDATION")
                                 else:
                                     self.peca_pos[id_peca][i].append(f'{start_pos_l}{start_pos_n+(idx)}')
@@ -136,6 +143,7 @@ class Player:
 
                             if n[-1] == 'V':
                                 if start_pos_l_idx+count >= len(ref):
+                                    self.save_error("ERROR_POSITION_NONEXISTENT_VALIDATION")
                                     raise Exception("ERROR_POSITION_NONEXISTENT_VALIDATION")
                                 else:
                                     self.peca_pos[id_peca][i].append(f'{ref[start_pos_l_idx+idx]}{start_pos_n}')
@@ -146,6 +154,7 @@ class Player:
 
                             elif n[-1] == 'H':
                                 if start_pos_n+(idx+1) >= len(ref):
+                                    self.save_error("ERROR_POSITION_NONEXISTENT_VALIDATION")
                                     raise Exception("ERROR_POSITION_NONEXISTENT_VALIDATION")
                                 else:
                                     self.peca_pos[id_peca][i].append(f'{start_pos_l}{start_pos_n+(idx)}')
@@ -161,6 +170,7 @@ class Player:
                             count = idx+1
 
                             if (start_pos_l not in ref) or (start_pos_n >= 15):
+                                self.save_error("ERROR_POSITION_NONEXISTENT_VALIDATION")
                                 raise Exception("ERROR_POSITION_NONEXISTENT_VALIDATION")
                             else:
                                 self.peca_pos[id_peca][i].append(n)
@@ -177,6 +187,7 @@ class Player:
 
                             if n[-1] == 'V':
                                 if start_pos_l_idx+count >= len(ref):
+                                    self.save_error("ERROR_POSITION_NONEXISTENT_VALIDATION")
                                     raise Exception("ERROR_POSITION_NONEXISTENT_VALIDATION")
                                 else:
                                     self.peca_pos[id_peca][i].append(f'{ref[start_pos_l_idx+idx]}{start_pos_n}')
@@ -187,6 +198,7 @@ class Player:
 
                             elif n[-1] == 'H':
                                 if start_pos_n+(idx+1) >= len(ref):
+                                    self.save_error("ERROR_POSITION_NONEXISTENT_VALIDATION")
                                     raise Exception("ERROR_POSITION_NONEXISTENT_VALIDATION")
                                 else:
                                     self.peca_pos[id_peca][i].append(f'{start_pos_l}{start_pos_n+(idx)}')
